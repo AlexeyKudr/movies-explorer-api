@@ -4,22 +4,14 @@ const { errors: celebrateErrors } = require('celebrate');
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
+const cors = require('cors');
 const router = require('./routers');
 const errors = require('./middlewars/errors');
 const { requestLogger, errorLogger } = require('./middlewars/logger');
 const NotFoundError = require('./middlewars/NotFoundError');
 const limiter = require('./utils/rateLimit');
-const cors = require('./middlewars/cors');
 
 const app = express();
-app.use(helmet());
-const { PORT, MONGO_DB } = process.env;
-mongoose.connect(MONGO_DB, ({
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}));
-app.use(limiter);
-app.use(requestLogger);
 const options = {
   origin: [
     'https://api.alexeykudr.nomoredomainswork.ru',
@@ -39,6 +31,16 @@ const options = {
   credentials: true,
 };
 app.use(cors(options));
+app.use(helmet());
+
+const { PORT, MONGO_DB } = process.env;
+mongoose.connect(MONGO_DB, ({
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}));
+app.use(limiter);
+app.use(requestLogger);
+
 app.use(express.json());
 app.use(cookieParser());
 app.get('/crash-test', () => {
