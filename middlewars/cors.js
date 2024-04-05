@@ -1,10 +1,14 @@
 const allowedCors = [
-  'https://praktikum.tk',
-  'http://praktikum.tk',
+  'https://api.alexeykudr.nomoredomainswork.ru',
+  'http://api.alexeykudr.nomoredomainswork.ru',
+  'https://alexeykudr.nomoredomainswork.ru',
+  'http://alexeykudr.nomoredomainswork.ru',
+  'https://api.nomoreparties.co/beatfilm-movies',
   'http://localhost:3000',
   'http://localhost:3001',
   'http://localhost:3000/users/me',
   'http://localhost:3000/movies',
+
 ];
 
 // eslint-disable-next-line consistent-return
