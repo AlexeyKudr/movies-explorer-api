@@ -20,7 +20,25 @@ mongoose.connect(MONGO_DB, ({
 }));
 app.use(limiter);
 app.use(requestLogger);
-app.use(cors);
+const options = {
+  origin: [
+    'https://api.alexeykudr.nomoredomainswork.ru',
+    'http://api.alexeykudr.nomoredomainswork.ru',
+    'https://alexeykudr.nomoredomainswork.ru',
+    'http://alexeykudr.nomoredomainswork.ru',
+    'https://api.nomoreparties.co/beatfilm-movies',
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'http://localhost:3000/users/me',
+    'http://localhost:3000/movies',
+  ],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+  credentials: true,
+};
+app.use(cors(options));
 app.use(express.json());
 app.use(cookieParser());
 app.get('/crash-test', () => {
