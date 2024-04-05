@@ -18,6 +18,7 @@ mongoose.connect(MONGO_DB, ({
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }));
+app.use(limiter);
 app.use(requestLogger);
 app.use(cors);
 app.use(express.json());
@@ -31,7 +32,6 @@ app.use(router);
 app.use('*', (req, res, next) => {
   next(new NotFoundError('Страница не найдена'));
 });
-app.use(limiter);
 app.use(errorLogger);
 app.use(celebrateErrors());
 app.use(errors);
