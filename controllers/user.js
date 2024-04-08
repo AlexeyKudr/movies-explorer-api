@@ -45,6 +45,12 @@ const updateUser = async (req, res, next) => {
       .status(OK)
       .json(patchUser);
   } catch (error) {
+    if (error.code === MONGO_DUPLICATE_ERROR_CODE) {
+      return next(new DuplicateError('Такой email уже существует'));
+    }
+    if (error.name === 'ValidationError') {
+      return next(new BadRequestError('Некорректные данные'));
+    }
     return next(error);
   }
 };
